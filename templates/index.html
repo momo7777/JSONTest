@@ -1,0 +1,55 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<script>
+    function filter_on_click() {
+        $.ajax({
+        url:'/filtered_userstuff/',
+        type:'get',
+        data : "category=1",
+        success:function(data){
+            var str = '';
+            for(var i in data){
+                str = str + data[i]['name'] + " ";
+            }
+            alert(str);
+        }
+    });
+    }
+</script>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                {% for name in korean_category_names %}
+                    <li style="border-color:dimgray; color:black;"><a id="target" onclick="filter_on_click();">{{name}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="row">
+                {%for thing in stuffs %}
+                    <div class="col-xs-6 col-sm-3" style="height:350px">
+                        <a><img src="{% static thing.image %}"  width="200" height="200" alt="Generic placeholder thumbnail"></a>
+                        <h4>{{ thing.name }}</h4>
+                {% endfor %}
+            </div>
+
+
+        </div>
+</body>
+</html>
